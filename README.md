@@ -16,7 +16,7 @@
 ## **The Site View**
 
 <p align="center">
-  <img src="./public/images/mock-up.png" alt="Web Page Mock-Up">
+  <img src="./public/mock-up.png"" alt="Web Page Mock-Up">
   </b>
   </b>
 </p>
