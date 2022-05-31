@@ -4,18 +4,21 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    getSingleUser: async (parent, args) => {
-      return User.findOne({
-        $or: [{ _id: args._id }, { username: args.username }]})
-        .select('-__v -password')
-        .populate('savedBooks');
-    }
+    me: async (parent, args, context) => {
+        if (context.user) {
+          const userData = await User.findOne({ _id: context.user._id })
+            .select('-__v -password');
+          return userData;
+        }
+  
+        throw new AuthenticationError('Not logged in');
+      },
   },
 
   Mutation: {
-    createUser: async (parent, args) => {
-      const user = await User.create(args);
-      
+    addUser: async (parent, args) => {
+      const user = await User.create(args)
+ 
       if (!user) {
         return 'Something is wrong!';
       }
@@ -23,6 +26,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     login: async (parent, args) => {
       const user = await User.findOne({ $or: [{ username: args.username }, { email: args.email }] });
 
@@ -41,20 +45,18 @@ const resolvers = {
     },
     saveBook: async (parent, args, context) => {
       if (context.user) {
-        console.log('this before book create');
-        const updatedUser = await User.findOneAndUpdate(
+        return await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: args } },
+          { $addToSet: { savedBooks: args} },
           { new: true, runValidators: true }
         );
-        console.log('this after book create');
-
-        return updatedUser;
       }
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    deleteBook: async (parent, args, context) => {
+
+
+    removeBook: async (parent, args, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
