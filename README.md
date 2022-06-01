@@ -6,7 +6,7 @@
 #### GitHub: https://github.com/loriful/book-search
 
 ## **Deployment**
-#### https://  heroku
+#### https://shrouded-basin-40596.herokuapp.com/
 
 - [Description](#description)
 - [Installation](#installation)
@@ -16,7 +16,7 @@
 ## **The Site View**
 
 <p align="center">
-  <img src="./public/mock-up.png"" alt="Web Page Mock-Up">
+  <img src="./client/public/mockup.png" alt="Web Page Mock-Up">
   </b>
   </b>
 </p>
@@ -27,6 +27,9 @@
 
 ## **Usage**
 - Launch from browser at above link
+- Search for books
+- Signup & login to save them for future reference
+- Delete saved books when desired
 
 ## **Questions**
 ### Github Profile:  https://github.com/loriful
